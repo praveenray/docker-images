@@ -1,6 +1,6 @@
 ## Collection of dockerfiles
 
-### It's preferable to keep your host system as clean as possible and try out new software in docker containers. This enhances security and promotes computer hygiene by keeping your host system clean. We all know `apt-get remove` doesn't really remove _everything_ ! Windows is even worse when it comes to uninstalls.
+It's preferable to keep your host system as clean as possible and try out new software in docker containers. This enhances security and promotes computer hygiene by keeping your host system clean. We all know `apt-get remove` doesn't really remove _everything_ ! Windows is even worse when it comes to uninstalls.
 
 Each dockerfile has comments at the end detailing how to build and run.
 
