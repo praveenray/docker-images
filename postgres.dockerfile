@@ -9,6 +9,7 @@ WORKDIR /opt
 RUN curl -o postgres.tar.gz2 "https://ftp.postgresql.org/pub/source/v16.3/postgresql-16.3.tar.bz2"
 
 RUN tar jxf postgres.tar.gz2 && \
+    rm -f postgres.tar.gz2 && \
     cd postgresql-16.3 && \
     ./configure --prefix=/opt/postgres && \
     make --jobs=$(nproc) && \
@@ -45,7 +46,8 @@ RUN groupadd -r postgres && \
     echo 'export PATH=$PATH:/opt/postgres/bin' >> /etc/profile && \
     echo 'export LD_LIBRARY_PATH=/opt/postgres-shared-libs' >> /etc/profile && \
     mkdir -p /opt/postgres-data && \
-    chown -R postgres:postgres /opt/postgres-data
+    chown -R postgres:postgres /opt/postgres-data && \
+    rm -rf /opt/postgresql-*
 
 COPY --from=build /opt /opt
 USER postgres
