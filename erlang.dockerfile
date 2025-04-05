@@ -4,16 +4,21 @@ RUN apt-get update -y
 RUN apt install pkg-config unixodbc-dev build-essential libssl-dev openssl git curl file xz-utils libncurses-dev default-jdk perl-base -y
 WORKDIR /software
 
-RUN curl -k -L -o otp_src_27.tar.gz  https://github.com/erlang/otp/releases/download/OTP-27.0/otp_src_27.0.tar.gz && \
+RUN curl -k -L -o otp_src_27.tar.gz https://github.com/erlang/otp/releases/download/OTP-27.3.2/otp_src_27.3.2.tar.gz && \
     tar zxf otp_src_27.tar.gz && \
-    cd otp_src_27.0 && \
-    export ERL_TOP=/software/otp_src_27.0 && \
+    cd otp_src_27.3.2 && \
+    export ERL_TOP=/software/otp_src_27.3.2 && \
     export LANG=C && \
     export JAVA_HOME=/usr/lib/jvm/default-java && \
     ./configure --prefix=/opt/erlang && \
     make --jobs=$(nproc) && \
     make install
 RUN ls -l /opt/
+RUN curl -k -L -o rebar3 "https://s3.amazonaws.com/rebar3/rebar3"
+RUN chmod +x rebar3
+RUN PATH=$PATH:/opt/erlang/bin ./rebar3 local install
+RUN cp rebar3 /opt/erlang/bin
+
 
 FROM ubuntu
 COPY --from=build /opt/erlang /opt/erlang
